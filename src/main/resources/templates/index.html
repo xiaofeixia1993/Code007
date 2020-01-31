@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>首页-Java1234下载</title>
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+</head>
+<body>
+<div class="w1170" style="padding-bottom: 10px;overflow:visible;">
+    <ul class="layui-nav" lay-filter="">
+        <li class="layui-nav-item"><a href="/">首页</a></li>
+        <li class="layui-nav-item"><a href="/toVipPage">VIP购买</a></li>
+        <li class="layui-nav-item"><a href="http://blog.java1234.com/blog/articles/427.html" target="_blank">领取100积分</a></li>
+        <li class="layui-nav-item"><a href="http://blog.java1234.com/blog/articles/425.html" target="_blank">领取本站源码</a></li>
+        <li class="layui-nav-item"><a href="http://blog.java1234.com/blog/articles/428.html" target="_blank">获取本站项目商业授权</a></li>
+        <li class="layui-nav-item"><a href="http://www.java1234.com/javaxuexiluxiantu.html" target="_blank">Java学习路线图</a></li>
+
+
+
+        <li class="layui-nav-item" style="float: right;"><a onclick="showRegister()" style="padding-left: 8px;padding-right: 8px;" target="_blank">注册</a></li>
+        <li class="layui-nav-item" style="float: right;"><a onclick="showLogin()" style="padding-left: 8px;padding-right: 8px;" target="_blank">登录</a></li>
+    </ul>
+</div>
+<div class="w1170">
+
+    <div class="pLeft">
+        <div class="data_list">
+            <div class="data_list_title">
+                <i class="layui-icon layui-icon-search"></i>
+                <span class="head">条件检索</span>
+            </div>
+            <div class="data_search">
+                <div>
+                    <table>
+                        <tr>
+                            <td width="80px" style="padding-top: 0px;padding-bottom: 28px;"><font class="stitle">资源类别：</font></td>
+                            <td>
+                                <ul>
+                                    <li><a href="/"><span id="t_0">全部</span></a></li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=20" title="Java技术">
+                                            <span id="t_20">Java技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=21" title="数据库技术">
+                                            <span id="t_21">数据库技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=22" title="Web前端技术">
+                                            <span id="t_22">Web前端技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=23" title="J2EE技术">
+                                            <span id="t_23">J2EE技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=24" title="分布式微服技术">
+                                            <span id="t_24">分布式微服技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=25" title="移动APP开发技术">
+                                            <span id="t_25">移动APP开发技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=26" title="微信小程序开发">
+                                            <span id="t_26">微信小程序开发</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=27" title="服务器技术">
+                                            <span id="t_27">服务器技术</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=34" title="Java架构">
+                                            <span id="t_34">Java架构</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=28" title="人工智能">
+                                            <span id="t_28">人工智能</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=29" title="数据挖掘">
+                                            <span id="t_29">数据挖掘</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=30" title="大数据云计算">
+                                            <span id="t_30">大数据云计算</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=31" title="区块链">
+                                            <span id="t_31">区块链</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=32" title="机器学习">
+                                            <span id="t_32">机器学习</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=33" title="算法">
+                                            <span id="t_33">算法</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=36" title="软件测试">
+                                            <span id="t_36">软件测试</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/list/1?typeId=35" title="其他">
+                                            <span id="t_35">其他</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr style="border-top: dashed 1px #e6e6e6;height: 60px;">
+                            <td width="80px" style="padding-top: 0px;"><font class="stitle">关键词：</font></td>
+                            <td>
+                                <form action="/article/search" onsubmit="return submitData()">
+                                    <div class="layui-row">
+                                        <div class="layui-col-md10">
+                                            <input type="text" id="q" name="q" autocomplete="off" class="layui-input" style="height: 30px" />
+                                        </div>
+                                        <div class="layui-col-md2">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="layui-btn layui-btn-radius layui-btn-sm" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " />
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data_list">
+            <div class="data_list_title">
+                <i class="layui-icon layui-icon-template-1"></i>
+                <span class="head">资源列表</span>
+            </div>
+            <div class="layui-form">
+                <table class="layui-table" lay-skin="line">
+                    <colgroup>
+                        <col />
+                        <col width="100" />
+                        <col width="80" />
+                        <col width="120" />
+                        <col width="80" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>资源名称</th>
+                        <th>查看次数</th>
+                        <th>上传者</th>
+                        <th>上传日期</th>
+                        <th>积分</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a target="_blank" href="/article/1843" title="蜡笔小新小游戏">蜡笔小新小游戏</a></td>
+                        <td>168 次</td>
+                        <td>王彪</td>
+                        <td>2020-01-23</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1842" title="kafka基础入门学习视频">kafka基础入门学习视频</a></td>
+                        <td>169 次</td>
+                        <td>18273792510</td>
+                        <td>2020-01-21</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1841" title="数据结构与算法就业实战视频教程 下载">数据结构与算法就业实战视频教程 下载</a></td>
+                        <td>153 次</td>
+                        <td>AB</td>
+                        <td>2020-01-20</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1840" title="Spark离线和实时电影推荐系统直播回放(视频+文档+代码） 下载">Spark离线和实时电影推荐系统直播回放(视频+文档+代码） </a></td>
+                        <td>177 次</td>
+                        <td>黑马</td>
+                        <td>2020-01-10</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1839" title="精通并发与Netty（共92讲）视频教程 下载">精通并发与Netty（共92讲）视频教程 下载</a></td>
+                        <td>191 次</td>
+                        <td>文君</td>
+                        <td>2020-01-07</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1838" title="web前端视频下载">web前端视频下载</a></td>
+                        <td>147 次</td>
+                        <td>淇水汤汤</td>
+                        <td>2019-12-19</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1837" title="微信移动小商城">微信移动小商城</a></td>
+                        <td>152 次</td>
+                        <td>liuyc</td>
+                        <td>2019-12-17</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1836" title="百战程序员-2018年SpringBoot视频教程入门到高级（高薪必备技能） 下载">百战程序员-2018年SpringBoot视频教程入门到高级（</a></td>
+                        <td>125 次</td>
+                        <td>文君</td>
+                        <td>2019-12-15</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1835" title="jvm、nio、netty优化使用视频教程 下载">jvm、nio、netty优化使用视频教程 下载</a></td>
+                        <td>104 次</td>
+                        <td>文君</td>
+                        <td>2019-12-06</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1834" title="Node.js入门与实战博客项目（26节全） 视频 下载">Node.js入门与实战博客项目（26节全） 视频 下载</a></td>
+                        <td>192 次</td>
+                        <td>黑马</td>
+                        <td>2019-12-05</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1833" title="SSR">SSR</a></td>
+                        <td>163 次</td>
+                        <td>czz</td>
+                        <td>2019-12-04</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1832" title="老男孩Python2019深圳骑士计划第一期 ">老男孩Python2019深圳骑士计划第一期 </a></td>
+                        <td>112 次</td>
+                        <td>BillGates</td>
+                        <td>2019-11-29</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1831" title="深度学习">深度学习</a></td>
+                        <td>188 次</td>
+                        <td>123@</td>
+                        <td>2019-11-29</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1830" title="ECMAScript 2018快速入门">ECMAScript 2018快速入门</a></td>
+                        <td>189 次</td>
+                        <td>某人的目光丶</td>
+                        <td>2019-11-21</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1829" title="传智播客黑马python就业班+人工智能 15期">传智播客黑马python就业班+人工智能 15期</a></td>
+                        <td>180 次</td>
+                        <td>bo0123</td>
+                        <td>2019-11-17</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1827" title="大数据时代.pdf">大数据时代.pdf</a></td>
+                        <td>170 次</td>
+                        <td>yguang123</td>
+                        <td>2019-11-15</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1826" title=" 前端框架(VUE2.0 angularJs4 H5全套)视频教程 下载"> 前端框架(VUE2.0 angularJs4 H5全套)视频</a></td>
+                        <td>178 次</td>
+                        <td>黑马</td>
+                        <td>2019-11-06</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1825" title="Uni app视频">Uni app视频</a></td>
+                        <td>160 次</td>
+                        <td>chunfeng668</td>
+                        <td>2019-11-04</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1823" title="单点登陆sso">单点登陆sso</a></td>
+                        <td>192 次</td>
+                        <td>fxp</td>
+                        <td>2019-10-27</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="/article/1822" title="spring boot入门到精通 全套视频">spring boot入门到精通 全套视频</a></td>
+                        <td>116 次</td>
+                        <td>小灵</td>
+                        <td>2019-10-24</td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div align="center"><div class='layui-box layui-laypage layui-laypage-default' id='layui-laypage-1' ><a href='/article/list/1'>首页</a><a href='javascript:;' class='layui-laypage-prev layui-disabled'>上一页</a><span class='layui-laypage-curr'><em class='layui-laypage-em'></em><em>1</em></span><a href='/article/list/2'>2</a><a href='/article/list/3'>3</a><a href='/article/list/4'>4</a><a href='/article/list/5'>5</a><a href='/article/list/2' class='layui-laypage-next'>下一页</a><a href='/article/list/79'>尾页</a></div></div>
+        </div>
+    </div>
+
+    <div class="pRight">
+        <div class="data_list">
+            <div class="data_list_title">
+                <i class="layui-icon layui-icon-face-smile-fine"></i>
+                <span class="head">每日签到，每日领取3个积分</span>
+            </div>
+            <div align="center">
+                <a onclick="sign()"><img style="padding-top: 10px;padding-bottom: 10px" width="200" height="50" alt="用户签到处" src="/static/images/sign.jpg" /></a>
+
+
+                <p style="padding-bottom: 10px">今日已经有<font color="red">12</font>位大佬签到了！</p>
+            </div>
+        </div>
+
+
+        <div class="data_list">
+            <div class="data_list_title">
+                <i class="layui-icon layui-icon-fire"></i>
+                <span class="head">热门资源</span>
+            </div>
+            <div class="datas">
+                <ul>
+                    <li>
+                        <a target="_blank" href="/article/1725" title="系统架构设计师视频教程 下载">系统架构设计师视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1363" title="某马社交十次方">某马社交十次方</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1362" title="汪文君Java8新特性及实战视频教程 下载">汪文君Java8新特性及实战视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1360" title="老男孩大数据kafka视频教程 下载">老男孩大数据kafka视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1354" title="大数据bmp项目实战9天 视频教程 下载">大数据bmp项目实战9天 视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1353" title="2017年-传智播客-张志君老师-SpringBoot视频教程 下载">2017年-传智播客-张志君老师-Spri</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1351" title="深入理解Java8新特性与源码剖析 视频教程 下载">深入理解Java8新特性与源码剖析 视频教</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1350" title="Rabbitmq企业级消息队列 视频教程 下载">Rabbitmq企业级消息队列 视频教程 </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1349" title="川大-- 数据结构考点精讲课程原版 视频教程 下载">川大-- 数据结构考点精讲课程原版 视频教</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1348" title="电商数据仓库全流程开发 视频教程 下载">电商数据仓库全流程开发 视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1347" title="dubbo视频教程 下载">dubbo视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1346" title="activiti6+SpringBoot视频教程 下载">activiti6+SpringBoot视</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1345" title="某马39期前端视频教程 下载">某马39期前端视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1344" title="SpringBoot与Shiro整合-权限管理实战视频教程 下载">SpringBoot与Shiro整合-权限</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1342" title="Java高级架构师-互联网企业级实战 视频教程 下载">Java高级架构师-互联网企业级实战 视频</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1341" title="某智java零基础到架构师全套教学视频 下载">某智java零基础到架构师全套教学视频 下</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1340" title="某马安卓Android74期全套视频教程 下载">某马安卓Android74期全套视频教程 </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1339" title="前端入门到精通完整版视频教程 下载">前端入门到精通完整版视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1323" title="2018达内JAVA全套视频完整版 视频教程 下载">2018达内JAVA全套视频完整版 视频教</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1322" title="前传智播客讲师-郭永锋最新工作室2018年4月班 javaweb 视频教程 下载">前传智播客讲师-郭永锋最新工作室2018年</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1317" title="电商数据仓库全流程开发视频下载">电商数据仓库全流程开发视频下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1316" title="黑马49期JAVA视频教程 下载">黑马49期JAVA视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1293" title="微信小程序全套视频教程下载">微信小程序全套视频教程下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1208" title="云计算大数据">云计算大数据</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1169" title="尚学堂2018年11月最新java全套就业班狂暴来袭价值2W（每月都更新，享受最新的技术知识）">尚学堂2018年11月最新java全套就业</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1138" title="尚学堂1811期人工智能全套视频教程 下载">尚学堂1811期人工智能全套视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1136" title="尚学堂1811期大数据全套视频教程 下载">尚学堂1811期大数据全套视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1134" title="尚学堂1811期Web前端全套视频教程 下载">尚学堂1811期Web前端全套视频教程 下</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1133" title="尚学堂1811期Java+架构全套视频教程 下载">尚学堂1811期Java+架构全套视频教程</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1015" title="android从0基础到大神 视频教程 下载">android从0基础到大神 视频教程 下</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1014" title="某马乐优购项目视频教程 下载">某马乐优购项目视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1013" title="某牛网大数据 视频教程 下载">某牛网大数据 视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1003" title="2018史上最好的Java面试突击课程第一季视频教程 下载">2018史上最好的Java面试突击课程第一</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/1002" title="分布式事务 视频教程 下载">分布式事务 视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/960" title="2018大型分布式电商系统高清完整版 视频教程 下载">2018大型分布式电商系统高清完整版 视频</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/923" title="高焕堂 Android编程架构师(全部234课) 视频教程 下载">高焕堂 Android编程架构师(全部23</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/839" title="最新大数据大数据视频教程 下载">最新大数据大数据视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/833" title="动力节点Java基础301集_史上最全的Java基础教程">动力节点Java基础301集_史上最全的J</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/792" title="Web前端开发视频教程 下载">Web前端开发视频教程 下载</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/789" title="大型SpringMVC，Mybatis，Redis，Solr，Nginx，SSM分布式电商项目视频教程 下载">大型SpringMVC，Mybatis，R</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/788" title="前端视频课程全套 初级+中级+高级 视频教程 下载">前端视频课程全套 初级+中级+高级 视频教</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/787" title="SSM分布式案例-互联网商城-阶段项目 视频教程 下载">SSM分布式案例-互联网商城-阶段项目 视</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/article/785" title="spring源码深度解析+注解开发全套视频教程 下载">spring源码深度解析+注解开发全套视频</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w1170">
+    <div class="data_list">
+        <div class="data_list_title">
+            <img src="images/link_icon.png" />
+            <span class="head">友情链接</span>
+        </div>
+        <div class="data_link">
+            <ul>
+                <li>
+                    <a target="_blank" href="http://www.java1234.com" title="Java1234">
+                        <span>Java1234</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://blog.java1234.com" title="Java1234博客">
+                        <span>Java1234博客</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://www.javafxw.com" title="Java源码资源分享网">
+                        <span>Java源码资源分享网</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://www.itkoudai.com/" title="IT口袋网资源下载">
+                        <span>IT口袋网资源下载</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://www.javaxz.com" title="Java分享网">
+                        <span>Java分享网</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://www.javaperson.com" title="java人知识分享网">
+                        <span>java人知识分享网</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="w960" style="padding-top: 40px">
+    <div class="sInfo">
+        Powered by <a href="http://www.java1234.com" target="_blank">Java1234</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/toDeclarePage">免责申明</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" style="color: red" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1002222344&amp;site=qq&amp;menu=yes">侵权举报</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1002222344&amp;site=qq&amp;menu=yes">广告合作</a>
+    </div>
+    <div class="foot" align="center">Copyright © 2012-2018 Java知识分享网 版权所有</div>
+    <!-- <div class="css3btn"><a target="blank" th:href="@{https://www.itbaizhan.cn?from=java1234}" ><img src="http://www.bjsxt.com/statics/images/bjsxt/images/bz_ico1.png"/><p class="bubble">百战（IT6000）集全套视频领取</p></a></div>  -->
+
+</div>
+<script src="layui/layui.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+    /*<![CDATA[*/
+    layui.use(['element','laypage','form'], function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
