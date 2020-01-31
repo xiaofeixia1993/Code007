@@ -14,12 +14,12 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  * @author wyh
  *
  */
-public class CustomDateSerializer extends JsonSerializer<Date>{
+public class CustomDateTimeSerializer extends JsonSerializer<Date>{
 
     @Override
     public void serialize(Date value, JsonGenerator gen, SerializerProvider serializers)
             throws IOException, JsonProcessingException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         gen.writeString(sdf.format(value));
     }
 
