@@ -48,6 +48,8 @@ public class ArticleController {
         Long total = articleService.getTotal(s_article);
         mav.addObject("articleList", indexArticleList);
         mav.addObject("title", "第" + page + "页");
+        s_article.setHot(true);
+        mav.addObject("hotArticleList", articleService.list(s_article, 1, 43, Sort.Direction.DESC, "publishDate"));
         StringBuffer params = new StringBuffer();
         if (typeId != null) {
             params.append("?typeId=" + typeId);

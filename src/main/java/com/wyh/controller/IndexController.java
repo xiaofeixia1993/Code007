@@ -34,7 +34,10 @@ public class IndexController {
         s_article.setState(2);
         List<Article> indexArticleList = articleService.list(s_article, 1, 20, Sort.Direction.DESC, "publishDate");
         Long total = articleService.getTotal(s_article);
+        s_article.setHot(true);
+        List<Article> indexHotArticleList = articleService.list(s_article, 1, 43, Sort.Direction.DESC, "publishDate");
         mav.addObject("articleList", indexArticleList);
+        mav.addObject("hotArticleList", indexHotArticleList);
         mav.addObject("title", "首页");
         mav.addObject("pageCode", PageUtil.genPagination("/article/list", total, 1, 20, ""));
         return mav;
