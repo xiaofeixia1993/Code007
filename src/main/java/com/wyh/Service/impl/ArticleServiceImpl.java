@@ -38,6 +38,9 @@ public class ArticleServiceImpl implements ArticleService {
                     if (s_article.getState() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("state"), s_article.getState()));
                     }
+                    if (s_article.getArcType() != null && s_article.getArcType().getId() != null) {
+                        predicate.getExpressions().add(cb.equal(root.get("arcType").get("id"), s_article.getArcType().getId()));
+                    }
                 }
                 return predicate;
             }
@@ -54,6 +57,9 @@ public class ArticleServiceImpl implements ArticleService {
                 if (s_article != null) {
                     if (s_article.getState() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("state"), s_article.getState()));
+                    }
+                    if (s_article.getArcType() != null && s_article.getArcType().getId() != null) {
+                        predicate.getExpressions().add(cb.equal(root.get("arcType").get("id"), s_article.getArcType().getId()));
                     }
                 }
                 return predicate;
