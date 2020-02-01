@@ -2,7 +2,7 @@ package com.wyh.Service.impl;
 
 import com.wyh.Service.ArcTypeService;
 import com.wyh.entity.ArcType;
-import com.wyh.respository.ArcTypeRespository;
+import com.wyh.repository.ArcTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ArcTypeServiceImpl implements ArcTypeService{
 
     @Autowired
-    private ArcTypeRespository arcTypeRespository;
+    private ArcTypeRepository arcTypeRespository;
 
     @Override
     public List<ArcType> listAll(Direction direction, String... properties) {

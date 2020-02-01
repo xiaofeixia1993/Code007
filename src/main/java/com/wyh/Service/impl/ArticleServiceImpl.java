@@ -2,12 +2,12 @@ package com.wyh.Service.impl;
 
 import com.wyh.Service.ArticleService;
 import com.wyh.entity.Article;
-import com.wyh.respository.ArticleRespository;
+import com.wyh.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +25,10 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
-    private ArticleRespository articleRespository;
+    private ArticleRepository articleRespository;
 
     @Override
-    public List<Article> list(Article s_article, Integer page, Integer pageSize, Sort.Direction direction, String... properties) {
+    public List<Article> list(Article s_article, Integer page, Integer pageSize, Direction direction, String... properties) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, direction, properties);
         Page<Article> pageArticle = articleRespository.findAll(new Specification<Article>() {
             @Override
