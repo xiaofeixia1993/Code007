@@ -40,7 +40,7 @@
                                 <ul>
                                     <li><a href="/"><span id="t_0">全部</span></a></li>
                                     <li th:each = "arcType:${application.allArcTypeList}">
-                                        <a th:href="'/article/list/1?typeId =' + ${arcType.id}" th:title="${arcType.name}">
+                                        <a th:href="'/article/list/1?typeId=' + ${arcType.id}" th:title="${arcType.name}">
                                             <span id="'t_' + ${arcType.id}" th:text = "${arcType.name}"></span>
                                         </a>
                                     </li>
