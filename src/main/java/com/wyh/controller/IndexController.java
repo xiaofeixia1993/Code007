@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,8 +27,9 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/")
-    public ModelAndView root() {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView root(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("index");
+        request.getSession().setAttribute("tMenu", "t_0");
         Article s_article = new Article();
         s_article.setState(2);
         List<Article> indexArticleList = articleService.list(s_article, 1, 20, Sort.Direction.DESC, "publishDate");
@@ -35,7 +37,6 @@ public class IndexController {
         mav.addObject("articleList", indexArticleList);
         mav.addObject("title", "首页");
         mav.addObject("pageCode", PageUtil.genPagination("/article/list", total, 1, 20, ""));
-        mav.setViewName("index");
         return mav;
     }
 }
