@@ -86,7 +86,7 @@
         });
 
         $("#sbtn").attr('disabled',true);
-
+        $("#errorInfo").text("");
         $.post("/user/register",{userName:$("#userName").val().trim(),password:$("#password").val().trim(),email:$("#email").val().trim()},function(result){
             layer.close(index);
             $("#sbtn").attr('disabled',false);
