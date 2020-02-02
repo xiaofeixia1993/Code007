@@ -5,6 +5,7 @@ import com.wyh.Service.UserService;
 import com.wyh.entity.User;
 import com.wyh.entity.VaptchaMessage;
 import com.wyh.util.CryptographyUtil;
+import com.wyh.util.StringUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -14,6 +15,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,6 +38,50 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 用户登录请求
+     * @param user
+     * @param vaptcha_token
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/login")
+    public Map<String, Object> login(User user, String vaptcha_token, HttpServletRequest request) throws Exception{
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (StringUtil.isEmpty(user.getUserName().trim())) {
+            map.put("success", false);
+            map.put("errorInfo", "请输入用户名！");
+        }else if(StringUtil.isEmpty(user.getPassword().trim())) {
+            map.put("success", false);
+            map.put("errorInfo", "请输入密码！");
+        }else if (!vaptchaCheck(vaptcha_token, request.getRemoteHost())){
+            map.put("success", false);
+            map.put("errorInfo", "人机验证失败！");
+        }else {
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), CryptographyUtil.md5(user.getPassword(), CryptographyUtil.SALT));
+            try {
+                subject.login(token);
+                String userName = (String) SecurityUtils.getSubject().getPrincipal();
+                User currentUser = userService.findByUserName(userName);
+                if (currentUser.isOff()) {
+                    map.put("success", false);
+                    map.put("errorInfo", "该用户已经被封禁，请联系管理员！");
+                    subject.logout();
+                }else {
+                    request.getSession().setAttribute("currentUser", currentUser);
+                    map.put("success", true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                map.put("success", false);
+                map.put("errorInfo", "用户名或者密码错误！");
+            }
+        }
+        return map;
+    }
 
     /**
      * 用户注册
