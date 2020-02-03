@@ -19,12 +19,16 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -38,6 +42,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Resource
+    private JavaMailSender mailSender;
 
     /**
      * 用户登录请求
@@ -113,6 +120,74 @@ public class UserController {
             map.put("success", true);
         }
         return map;
+    }
+
+    /**
+     * 发送邮件
+     * @param email
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/sendEmail")
+    public Map<String, Object> sendEmail(String email, HttpSession session) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if (StringUtil.isEmpty(email)) {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "邮件不能为空！");
+            return resultMap;
+        }
+        User u = userService.findByEmail(email);
+        if (u == null) {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "邮件不存在！");
+            return resultMap;
+        }
+        String mailCode = StringUtil.genSixRandomNum();
+        System.out.println("mailCode:" + mailCode);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("1130178159@qq.com");//发件人
+        message.setTo(email);//收件人
+        message.setSubject("Java大爷网站-用户找回密码");//主题
+        message.setText("验证码：" + mailCode);
+        mailSender.send(message);
+
+        //验证码存到session中
+        session.setAttribute("mailCode", mailCode);
+        session.setAttribute("userId", u.getId());
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 邮件验证码判断 重置
+     * @param yzm
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/checkYzm")
+    public Map<String, Object> checkYzm(String yzm, HttpSession session) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if (StringUtil.isEmpty(yzm)) {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "验证码不能为空！");
+            return resultMap;
+        }
+        String mailCode = (String) session.getAttribute("mailCode");
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (!yzm.equals(mailCode)) {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "验证码错误！");
+            return resultMap;
+        }
+        User user = userService.getById(userId);
+        user.setPassword(CryptographyUtil.md5("123456", CryptographyUtil.SALT));
+        userService.save(user);
+        resultMap.put("success", true);
+        return resultMap;
     }
 
     /**
