@@ -5,7 +5,9 @@ import com.wyh.Service.UserService;
 import com.wyh.entity.User;
 import com.wyh.entity.VaptchaMessage;
 import com.wyh.util.CryptographyUtil;
+import com.wyh.util.DateUtil;
 import com.wyh.util.StringUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -19,17 +21,20 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -45,6 +50,9 @@ public class UserController {
 
     @Resource
     private JavaMailSender mailSender;
+
+    @Value("${userImageFilePath}")
+    private String userImageFilePath; //取配置文件application.yml的userImageFilePath的值
 
     /**
      * 用户登录请求
@@ -213,6 +221,37 @@ public class UserController {
         userService.save(oldUser);
         resultMap.put("success", true);
         return resultMap;
+    }
+
+    /**
+     * 上传头像
+     * @param file
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/uploadImage")
+    public Map<String, Object> uploadImage(MultipartFile file, HttpSession session) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();//获取文件名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));//获取文件的后缀
+            String newFileName = DateUtil.getCurrentDateStr() + suffixName;//新文件名
+            FileUtils.copyInputStreamToFile(file.getInputStream(), new File(userImageFilePath + newFileName));
+            map.put("code", 0);
+            map.put("msg", "上传成功！");
+            Map<String, Object> map2 = new HashMap<String, Object>();
+            map2.put("src", "/userImages/" + newFileName);
+            map2.put("title", newFileName);
+            map.put("data", map2);
+
+            User user = (User) session.getAttribute("currentUser");
+            user.setImageName(newFileName);
+            userService.save(user);
+            session.setAttribute("currentUser", user);
+        }
+        return map;
     }
 
     /**
