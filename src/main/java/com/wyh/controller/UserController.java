@@ -191,6 +191,31 @@ public class UserController {
     }
 
     /**
+     * 修改密码
+     * @param oldpassword
+     * @param password
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/modifyPassword")
+    public Map<String, Object> modifyPassword(String oldpassword, String password, HttpSession session) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        User user = (User) session.getAttribute("currentUser");
+        if (!user.getPassword().equals(CryptographyUtil.md5(oldpassword, CryptographyUtil.SALT))) {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "原密码错误！");
+            return resultMap;
+        }
+        User oldUser = userService.getById(user.getId());
+        oldUser.setPassword(CryptographyUtil.md5(password, CryptographyUtil.SALT));
+        userService.save(oldUser);
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
      * 人机验证结果判断
      * @param token
      * @param ip

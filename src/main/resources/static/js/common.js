@@ -61,3 +61,12 @@ function showFindPassword(){
         content: '/findPassword.html' //iframe鐨剈rl
     });
 }
+
+function showModifyPassword(){
+    layer.open({
+        type: 2,
+        title: '修改用户密码',
+        area: ['480px', '500px'],
+        content: '/modifyPassword.html' //iframe鐨剈rl
+    });
+}
