@@ -87,4 +87,9 @@ public class ArticleServiceImpl implements ArticleService {
     public Article get(Integer id) {
         return articleRespository.getOne(id);
     }
+
+    @Override
+    public void save(Article article) {
+        articleRespository.save(article);
+    }
 }
