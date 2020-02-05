@@ -21,3 +21,5 @@ spring:
     cache: false
 
 userImageFilePath: D://userImages/
+
+articleImageFilePath: D://articleImages/
