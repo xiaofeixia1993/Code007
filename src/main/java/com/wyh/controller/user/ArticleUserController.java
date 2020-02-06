@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,6 +109,18 @@ public class ArticleUserController {
     }
 
     /**
+     * 跳转到帖子修改页面
+     * @return
+     */
+    @RequestMapping("/toModifyArticlePage/{id}")
+    public ModelAndView toModifyArticlePage(@PathVariable("id")Integer id) {
+        ModelAndView mav = new ModelAndView("modifyArticle");
+        mav.addObject("title", "帖子修改页面");
+        mav.addObject("article", articleService.get(id));
+        return mav;
+    }
+
+    /**
      * 添加帖子
      * @param article
      * @param session
@@ -124,6 +137,34 @@ public class ArticleUserController {
         article.setView(StringUtil.randomInteger());
         articleService.save(article);
         mav.addObject("title", "发布帖子成功页面");
+        return mav;
+    }
+
+    /**
+     * 更新帖子
+     * @param article
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/update")
+    public ModelAndView update(Article article) throws Exception {
+        ModelAndView mav = new ModelAndView("modifyArticleSuccess");
+        Article oldArticle = articleService.get(article.getId());
+        oldArticle.setName(article.getName());
+        oldArticle.setArcType(article.getArcType());
+        oldArticle.setContent(article.getContent());
+        oldArticle.setDownload1(article.getDownload1());
+        oldArticle.setPassword1(article.getPassword1());
+        oldArticle.setPoints(article.getPoints());
+        if (oldArticle.getState() == 3) {// 假如审核未通过，用户点击修改的话，则重新审核
+            oldArticle.setState(1);
+        }
+        articleService.save(oldArticle);
+        if (oldArticle.getState() == 2) {
+            // TODO 修改Lucene索引
+            // redis缓存删除这个索引
+        }
+        mav.addObject("title", "修改帖子成功页面");
         return mav;
     }
 }
