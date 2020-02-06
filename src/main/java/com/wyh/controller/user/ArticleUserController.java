@@ -167,4 +167,44 @@ public class ArticleUserController {
         mav.addObject("title", "修改帖子成功页面");
         return mav;
     }
+
+
+    /**
+     * 根据id删除帖子信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public Map<String, Object> delete(Integer id) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        // TODO 删除该帖子下的所有评论
+        articleService.delete(id);
+        // TODO 删除索引
+        // TODO 删除redis索引
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 多选删除
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/deleteSelected")
+    public Map<String, Object> deleteSelected(String ids) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String[] idsStr = ids.split(",");
+        for (int i = 0; i < idsStr.length; i++) {
+            // TODO 删除该帖子下的所有评论
+            articleService.delete(Integer.parseInt(idsStr[i]));
+            // TODO 删除索引
+            // TODO 删除redis索引
+        }
+        resultMap.put("success", true);
+        return resultMap;
+    }
 }
