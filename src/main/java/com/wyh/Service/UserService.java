@@ -1,6 +1,9 @@
 package com.wyh.Service;
 
 import com.wyh.entity.User;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
 
 /**
  * 用户Service接口
@@ -34,4 +37,22 @@ public interface UserService {
      * @return
      */
     public User getById(Integer id);
+
+    /**
+     * 根据条件分页查询用户信息
+     * @param s_user
+     * @param page
+     * @param pageSize
+     * @param direction
+     * @param properties
+     * @return
+     */
+    public List<User> list(User s_user, Integer page, Integer pageSize, Sort.Direction direction, String... properties);
+
+    /**
+     * 根据条件查询总记录数
+     * @param s_user
+     * @return
+     */
+    public Long getTotal(User s_user);
 }
