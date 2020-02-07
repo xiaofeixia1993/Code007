@@ -27,6 +27,7 @@ target/
 /.nb-gradle/
 build/
 layui/
+login/
 
 ### VS Code ###
 .vscode/
