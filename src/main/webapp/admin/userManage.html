@@ -80,11 +80,61 @@
             ,page: true
         });
 
+        // 监听会员设置操作
+        form.on('switch(vipSwitch)', function(obj){
+            $.post("/admin/user/updateVipState",{"id":this.name,"vip":obj.elem.checked},function(result){
+                if(result.success){
+                    layer.msg("执行成功！");
+                    table.reload("userListTable",{});
+                }else{
+                    layer.msg("执行失败，请联系管理员！");
+                }
+            },"json");
 
+        });
+
+        // 监听用户状态操作
+        form.on('switch(offSwitch)', function(obj){
+            $.post("/admin/user/updateUserState",{"id":this.name,"off":obj.elem.checked},function(result){
+                if(result.success){
+                    layer.msg("执行成功！");
+                    table.reload("userListTable",{});
+                }else{
+                    layer.msg("执行失败，请联系管理员！");
+                }
+            },"json");
+
+        });
     });
 
 
+    function resetPassword(id){
+        layer.confirm('您确定要对用户进行重置密码吗？', {
+            title:"系统提示"
+            ,btn: ['确定','取消'] //按钮
+        }, function(){
+            layer.closeAll('dialog');
+            $.post("/admin/user/resetPassword",{"id":id},function(result){
+                if(result.success){
+                    layer.msg("重置成功！");
+                    table.reload("userListTable",{});
+                }else{
+                    layer.msg("重置失败，请联系管理员！");
+                }
+            },"json");
+        }, function(){
 
+        });
+    }
+
+    function addPoints(id){
+        layer.open({
+            type: 2,
+            title: '充值积分',
+            area: ['400px', '300px'],
+            content: '/admin/addPoints.html?id='+id //iframe的url
+        });
+    }
 
     function formatAction(d){
         return "<button class='layui-btn layui-btn-warm layui-btn-xs' onclick='resetPassword("+d.id+")'><i class='layui-icon layui-icon-edit' ></i>重置密码</button>&nbsp;&nbsp;<button class='layui-btn layui-btn-normal layui-btn-xs' onclick='addPoints("+d.id+")'><i class='layui-icon layui-icon-edit' ></i>充值积分</button>";

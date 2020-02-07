@@ -2,6 +2,7 @@ package com.wyh.controller.admin;
 
 import com.wyh.Service.UserService;
 import com.wyh.entity.User;
+import com.wyh.util.CryptographyUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -44,6 +45,78 @@ public class UserAdminController {
         resultMap.put("code", 0);
         resultMap.put("count", total);
         resultMap.put("data", userList);
+        return resultMap;
+    }
+
+    /**
+     * 重置用户密码
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequiresPermissions(value = {"重置用户密码"})
+    @RequestMapping("/resetPassword")
+    public Map<String, Object> resetPassword(Integer id) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        User oldUser = userService.getById(id);
+        oldUser.setPassword(CryptographyUtil.md5("123456", CryptographyUtil.SALT));
+        userService.save(oldUser);
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 用户积分充值
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequiresPermissions(value = {"用户积分充值"})
+    @RequestMapping("/addPoints")
+    public Map<String, Object> addPoints(User user) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        User oldUser = userService.getById(user.getId());
+        oldUser.setPoints(oldUser.getPoints() + user.getPoints());
+        userService.save(oldUser);
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 修改用户VIP状态
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequiresPermissions(value = {"修改用户VIP状态"})
+    @RequestMapping("/updateVipState")
+    public Map<String, Object> updateVipState(User user) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        User oldUser = userService.getById(user.getId());
+        oldUser.setVip(user.isVip());
+        userService.save(oldUser);
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 修改用户状态
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequiresPermissions(value = {"修改用户状态"})
+    @RequestMapping("/updateUserState")
+    public Map<String, Object> updateUserState(User user) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        User oldUser = userService.getById(user.getId());
+        oldUser.setOff(user.isOff());
+        userService.save(oldUser);
+        resultMap.put("success", true);
         return resultMap;
     }
 
