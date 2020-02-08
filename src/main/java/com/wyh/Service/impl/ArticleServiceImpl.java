@@ -3,6 +3,7 @@ package com.wyh.Service.impl;
 import com.wyh.Service.ArticleService;
 import com.wyh.entity.Article;
 import com.wyh.repository.ArticleRepository;
+import com.wyh.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,6 +54,9 @@ public class ArticleServiceImpl implements ArticleService {
                     if (s_article.getUser() != null && s_article.getUser().getId() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("user").get("id"), s_article.getUser().getId()));
                     }
+                    if (s_article.getUser() != null && StringUtil.isNotEmpty(s_article.getUser().getUserName())) {
+                        predicate.getExpressions().add(cb.like(root.get("user").get("userName"), "%"+s_article.getUser().getUserName()+"%"));
+                    }
                 }
                 return predicate;
             }
@@ -73,6 +77,9 @@ public class ArticleServiceImpl implements ArticleService {
                     if (s_article.getState() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("state"), s_article.getState()));
                     }
+                    if (s_article.isHot()) {
+                        predicate.getExpressions().add(cb.equal(root.get("isHot"), 1));
+                    }
                     if (s_article.getArcType() != null && s_article.getArcType().getId() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("arcType").get("id"), s_article.getArcType().getId()));
                     }
@@ -81,6 +88,9 @@ public class ArticleServiceImpl implements ArticleService {
                     }
                     if (s_article.getUser() != null && s_article.getUser().getId() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("user").get("id"), s_article.getUser().getId()));
+                    }
+                    if (s_article.getUser() != null && StringUtil.isNotEmpty(s_article.getUser().getUserName())) {
+                        predicate.getExpressions().add(cb.like(root.get("user").get("userName"), "%"+s_article.getUser().getUserName()+"%"));
                     }
                 }
                 return predicate;
