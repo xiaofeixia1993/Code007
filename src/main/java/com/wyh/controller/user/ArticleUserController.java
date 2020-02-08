@@ -179,6 +179,7 @@ public class ArticleUserController {
     @RequestMapping("/delete")
     public Map<String, Object> delete(Integer id) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        // TODO 删除用户下载帖子信息
         // TODO 删除该帖子下的所有评论
         articleService.delete(id);
         // TODO 删除索引
@@ -199,6 +200,7 @@ public class ArticleUserController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         String[] idsStr = ids.split(",");
         for (int i = 0; i < idsStr.length; i++) {
+            // TODO 删除用户下载帖子信息
             // TODO 删除该帖子下的所有评论
             articleService.delete(Integer.parseInt(idsStr[i]));
             // TODO 删除索引
