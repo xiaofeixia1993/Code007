@@ -35,6 +35,17 @@
                 <div id="content" class="content" th:utext="${article.content}"></div>
             </div>
         </div>
+
+        <div class="data_list" style="margin-top: 10px">
+            <div class="data_list_title">
+                <i class="layui-icon layui-icon-dialogue"></i>
+                <span class="head">评论信息</span>
+            </div>
+            <div id="userComment" class="userComment">
+                <textarea id="commentContent" placeholder="请输入评论信息" class="layui-textarea"></textarea>
+                <button class="layui-btn layui-btn-radius  layui-btn-sm" onclick="submitData()">&nbsp;&nbsp;提交评论&nbsp;&nbsp;</button>
+            </div>
+        </div>
     </div>
 
     <div class="pRight">
@@ -142,6 +153,37 @@
 
             }else{
                 layer.msg("sorry,您不是VIP用户，不能用此通道！");
+            }
+        },"json");
+    }
+
+    function submitData(){
+        // 下载过这个资源才可以评论
+
+        if([[${session.currentUser}]]==null){
+            layer.msg("登录后才能评论！");
+            return;
+        }
+
+        // 判断是否下载过
+        // 添加记录
+        $.post("/user/userDownload/exist",{"id":[[${article.id}]]},function(result){
+            if(result){ // 下载过
+
+                var content=$("#commentContent").val();
+                if(content==""){
+                    layer.msg("请输入评论信息！");
+                    return;
+                }
+                $.post("/user/comment/save",{"article.id":[[${article.id}]],"content":content},function(result){
+                    if(result.success){
+                        $("#commentContent").val("");
+                        layer.msg("评论成功，稍后显示！");
+                    }
+                },"json");
+
+            }else{  // 未下载过
+                layer.msg("下载该资源后才能评论！");
             }
         },"json");
     }
