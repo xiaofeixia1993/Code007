@@ -1,5 +1,7 @@
 package com.wyh.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -63,6 +65,7 @@ public class Comment {
         this.content = content;
     }
 
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     public Date getCommentDate() {
         return commentDate;
     }

@@ -1,8 +1,10 @@
 package com.wyh.controller;
 
 import com.wyh.Service.ArticleService;
+import com.wyh.Service.CommentService;
 import com.wyh.entity.ArcType;
 import com.wyh.entity.Article;
+import com.wyh.entity.Comment;
 import com.wyh.init.InitSystem;
 import com.wyh.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CommentService commentService;
 
     /**
      * 根据条件分页查询资源帖子信息
@@ -75,6 +80,10 @@ public class ArticleController {
         s_article.setHot(true);
         s_article.setArcType(article.getArcType());
         List<Article> hotArticleList = articleService.list(s_article, 1, 43, Sort.Direction.DESC, "publishDate");
+        Comment s_comment = new Comment();
+        s_comment.setArticle(article);
+        s_comment.setState(1);//审核通过的评论信息
+        mav.addObject("commentCount", commentService.getTotal(s_comment));
         mav.addObject("hotArticleList", hotArticleList);
         return mav;
     }
