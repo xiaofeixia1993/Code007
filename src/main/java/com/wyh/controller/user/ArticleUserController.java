@@ -1,8 +1,11 @@
 package com.wyh.controller.user;
 
 import com.wyh.Service.ArticleService;
+import com.wyh.Service.UserDownloadService;
+import com.wyh.Service.UserService;
 import com.wyh.entity.Article;
 import com.wyh.entity.User;
+import com.wyh.entity.UserDownload;
 import com.wyh.util.DateUtil;
 import com.wyh.util.StringUtil;
 import org.apache.commons.io.FileUtils;
@@ -34,6 +37,12 @@ public class ArticleUserController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserDownloadService userDownloadService;
 
     @Value("${articleImageFilePath}")
     private String articleImageFilePath;
@@ -208,5 +217,83 @@ public class ArticleUserController {
         }
         resultMap.put("success", true);
         return resultMap;
+    }
+
+    /**
+     * 跳转到资源下载页面
+     * @param id
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/toDownLoadPage/{id}")
+    public ModelAndView toDownLoadPage(@PathVariable(value = "id")Integer id, HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView("user/downloadPage");
+        UserDownload userDownload = new UserDownload();
+        Article article = articleService.get(id);
+
+        User user = (User) session.getAttribute("currentUser");
+        boolean isDownload = false;//是否下载过
+        Integer count = userDownloadService.getCountByUserIdAndArticleId(user.getId(), id);
+        if (count > 0) {
+            isDownload = true;
+        }
+        if (!isDownload) {
+            if (user.getPoints() - article.getPoints() < 0) {//用户积分是否够
+                return null;
+            }
+
+            //扣积分
+            user.setPoints(user.getPoints() - article.getPoints());
+            userService.save(user);
+
+            //给分享人加积分
+            User articleUser = article.getUser();
+            articleUser.setPoints(articleUser.getPoints() + article.getPoints());
+            userService.save(articleUser);
+
+            //保存用户下载信息
+            userDownload.setArticle(article);
+            userDownload.setUser(user);
+            userDownload.setDownloadDate(new Date());
+            userDownloadService.save(userDownload);
+        }
+        mav.addObject("article", articleService.get(id));
+        return mav;
+    }
+
+    /**
+     * 跳转到Vip资源下载页面
+     * @param id
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/toVipDownLoadPage/{id}")
+    public ModelAndView toVipDownLoadPage(@PathVariable(value = "id")Integer id, HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView("user/downloadPage");
+        UserDownload userDownload = new UserDownload();
+        Article article = articleService.get(id);
+
+        User user = (User) session.getAttribute("currentUser");
+
+        if (!user.isVip()) {//判断是否是Vip
+            return null;
+        }
+
+        boolean isDownload = false;//是否下载过
+        Integer count = userDownloadService.getCountByUserIdAndArticleId(user.getId(), id);
+        if (count > 0) {
+            isDownload = true;
+        }
+        if (!isDownload) {
+            //保存用户下载信息
+            userDownload.setArticle(article);
+            userDownload.setUser(user);
+            userDownload.setDownloadDate(new Date());
+            userDownloadService.save(userDownload);
+        }
+        mav.addObject("article", articleService.get(id));
+        return mav;
     }
 }
