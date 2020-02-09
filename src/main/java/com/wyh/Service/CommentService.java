@@ -1,6 +1,5 @@
 package com.wyh.Service;
 
-import com.wyh.entity.Article;
 import com.wyh.entity.Comment;
 import org.springframework.data.domain.Sort;
 
@@ -35,4 +34,10 @@ public interface CommentService {
      * @return
      */
     public Long getTotal(Comment s_comment);
+
+    /**
+     * 删除评论
+     * @param id
+     */
+    public void delete(Integer id);
 }

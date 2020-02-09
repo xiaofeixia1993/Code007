@@ -46,6 +46,9 @@ public class CommentServiceImpl implements CommentService {
                     if (s_comment.getArticle() != null && s_comment.getArticle().getId() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("article").get("id"), s_comment.getArticle().getId()));
                     }
+                    if (s_comment.getArticle() != null && s_comment.getArticle().getUser() != null && s_comment.getArticle().getUser().getId() != null) {
+                        predicate.getExpressions().add(cb.equal(root.get("article").get("user").get("id"), s_comment.getArticle().getUser().getId()));
+                    }
                 }
                 return predicate;
             }
@@ -66,10 +69,18 @@ public class CommentServiceImpl implements CommentService {
                     if (s_comment.getArticle() != null && s_comment.getArticle().getId() != null) {
                         predicate.getExpressions().add(cb.equal(root.get("article").get("id"), s_comment.getArticle().getId()));
                     }
+                    if (s_comment.getArticle() != null && s_comment.getArticle().getUser() != null && s_comment.getArticle().getUser().getId() != null) {
+                        predicate.getExpressions().add(cb.equal(root.get("article").get("user").get("id"), s_comment.getArticle().getUser().getId()));
+                    }
                 }
                 return predicate;
             }
         });
         return count;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        commentRepository.deleteById(id);
     }
 }
