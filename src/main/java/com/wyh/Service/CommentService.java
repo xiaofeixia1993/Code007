@@ -40,4 +40,11 @@ public interface CommentService {
      * @param id
      */
     public void delete(Integer id);
+
+    /**
+     * 根据id获取实体
+     * @param id
+     * @return
+     */
+    public Comment get(Integer id);
 }
