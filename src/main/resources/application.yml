@@ -23,3 +23,5 @@ spring:
 userImageFilePath: D://userImages/
 
 articleImageFilePath: D://articleImages/
+
+lucenePath: C://lucene

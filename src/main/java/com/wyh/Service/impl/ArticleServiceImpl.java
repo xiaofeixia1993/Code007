@@ -113,4 +113,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void delete(Integer id) {
         articleRespository.deleteById(id);
     }
+
+    @Override
+    public List<Article> listAll() {
+        return articleRespository.findAll();
+    }
 }

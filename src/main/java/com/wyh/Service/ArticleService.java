@@ -23,6 +23,12 @@ public interface ArticleService {
     public List<Article> list(Article s_article, Integer page, Integer pageSize, Direction direction, String... properties);
 
     /**
+     * 查询所有帖子
+     * @return
+     */
+    public List<Article> listAll();
+
+    /**
      * 根据条件查询总记录数
      * @param s_article
      * @return

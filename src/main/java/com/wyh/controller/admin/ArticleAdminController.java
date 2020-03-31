@@ -2,6 +2,7 @@ package com.wyh.controller.admin;
 
 import com.wyh.Service.ArticleService;
 import com.wyh.entity.Article;
+import com.wyh.lucene.ArticleIndex;
 import com.wyh.util.DateUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,6 +35,26 @@ public class ArticleAdminController {
 
     @Value(value = "${articleImageFilePath}")
     private String articleImageFilePath;
+
+    @Autowired
+    private ArticleIndex articleIndex;
+
+    /**
+     * 生成所有帖子索引
+     * @return
+     */
+    @ResponseBody
+    @RequiresPermissions("生成所有帖子索引")
+    @RequestMapping(value = "genAllIndex")
+    public boolean genAllIndex() {
+        List<Article> articleList = articleService.listAll();
+        for (Article article : articleList){
+            if (!articleIndex.addIndex(article)){
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * 分页查询资源帖子信息
