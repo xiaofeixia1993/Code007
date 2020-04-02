@@ -285,6 +285,15 @@
             }
         },"json");
     }
+
+    function submitData(){
+        var q=$("#q").val();
+        if(q==""){
+            layer.msg("请输入关键字！");
+            $("#q").focus();
+            return false;
+        }
+    }
     /*]]>*/
 </script>
 </body>

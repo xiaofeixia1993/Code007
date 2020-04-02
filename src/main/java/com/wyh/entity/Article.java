@@ -22,6 +22,9 @@ public class Article {
 
     private Date publishDate;//发布日期
 
+    @Transient
+    private String publishDateStr;//发布日期字符串
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;//所属用户
@@ -174,5 +177,13 @@ public class Article {
 
     public void setView(Integer view) {
         this.view = view;
+    }
+
+    public String getPublishDateStr() {
+        return publishDateStr;
+    }
+
+    public void setPublishDateStr(String publishDateStr) {
+        this.publishDateStr = publishDateStr;
     }
 }

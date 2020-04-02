@@ -173,6 +173,7 @@ public class ArticleAdminController {
         // TODO 添加一个消息模块
         if (article.getState() == 2) {
             oldArticle.setState(2);
+            articleIndex.addIndex(oldArticle);
             //TODO 删除redis首页数据缓存
         }else {
             oldArticle.setState(3);

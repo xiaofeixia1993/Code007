@@ -42,7 +42,7 @@
                                 <form action="/article/search" onsubmit="return submitData()">
                                     <div class="layui-row">
                                         <div class="layui-col-md10">
-                                            <input type="text" id="q" name="q" autocomplete="off" class="layui-input" style="height: 30px" />
+                                            <input type="text" id="q" th:value="${q}" name="q" autocomplete="off" class="layui-input" style="height: 30px" />
                                         </div>
                                         <div class="layui-col-md2">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="layui-btn layui-btn-radius layui-btn-sm" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " />
@@ -141,6 +141,15 @@
         var tMenu = [[${session.tMenu}]];
         $("#"+tMenu).css("color", "red");
     });
+
+    function submitData(){
+        var q=$("#q").val();
+        if(q==""){
+            layer.msg("请输入关键字！");
+            $("#q").focus();
+            return false;
+        }
+    }
     /*]]>*/
 </script>
 </body>

@@ -6,7 +6,9 @@ import com.wyh.entity.ArcType;
 import com.wyh.entity.Article;
 import com.wyh.entity.Comment;
 import com.wyh.init.InitSystem;
+import com.wyh.lucene.ArticleIndex;
 import com.wyh.util.PageUtil;
+import com.wyh.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class ArticleController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private ArticleIndex articleIndex;
 
     /**
      * 根据条件分页查询资源帖子信息
@@ -87,4 +92,61 @@ public class ArticleController {
         mav.addObject("hotArticleList", hotArticleList);
         return mav;
     }
+
+    /**
+     * 关键字分词搜索
+     * @return
+     */
+    @RequestMapping("/search")
+    public ModelAndView search(String q,@RequestParam(value="page",required=false)String page,HttpServletRequest request)throws Exception{
+        request.getSession().setAttribute("tMenu", "t_0");
+        if(StringUtil.isEmpty(page)){
+            page="1";
+        }
+        Article s_article=new Article();
+        s_article.setHot(true);
+        List<Article> hotArticleList = articleService.list(s_article, 1, 43, Sort.Direction.DESC,"publishDate");
+        List<Article> articleList = articleIndex.search(q);
+        Integer toIndex=articleList.size()>=Integer.parseInt(page)*10?Integer.parseInt(page)*10:articleList.size();
+        ModelAndView mav=new ModelAndView();
+        mav.addObject("title", q);
+        mav.addObject("q",q);
+        mav.addObject("articleList",articleList.subList((Integer.parseInt(page)-1)*10, toIndex));
+        mav.addObject("resultTotal",articleList.size());
+        mav.addObject("hotArticleList", hotArticleList);
+        mav.addObject("pageCode", this.genUpAndDownPageCode(Integer.parseInt(page), articleList.size(), q, 10));
+        mav.setViewName("result");
+        return mav;
+    }
+
+    /**
+     * 生成上一页，下一页代码
+     * @param page
+     * @param totalNum
+     * @param q
+     * @param pageSize
+     * @return
+     */
+    private String genUpAndDownPageCode(Integer page,Integer totalNum,String q,Integer pageSize){
+        long totalPage=totalNum%pageSize==0?totalNum/pageSize:totalNum/pageSize+1;
+        StringBuffer pageCode=new StringBuffer();
+        if(totalPage==0){
+            return "";
+        }else{
+            pageCode.append("<div class='layui-box layui-laypage layui-laypage-default'>");
+            if(page>1){
+                pageCode.append("<a href='/article/search?page="+(page-1)+"&q="+q+"' class='layui-laypage-prev'>上一页</a>");
+            }else{
+                pageCode.append("<a href='#' class='layui-laypage-prev layui-disabled'>上一页</a>");
+            }
+            if(page<totalPage){
+                pageCode.append("<a href='/article/search?page="+(page+1)+"&q="+q+"' class='layui-laypage-next'>下一页</a>");
+            }else{
+                pageCode.append("<a href='#' class='layui-laypage-next layui-disabled'>下一页</a>");
+            }
+            pageCode.append("</div>");
+        }
+        return pageCode.toString();
+    }
+
 }
